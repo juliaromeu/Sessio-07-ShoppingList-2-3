@@ -1,4 +1,4 @@
-package edu.upc.eseiaat.pma.shoppinglist;
+package edu.upc.eseiaat.pma.shoppinglist2;
 
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
@@ -16,11 +16,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import edu.upc.eseiaat.pma.shoppinglist2.R;
+import edu.upc.eseiaat.pma.shoppinglist2.ShoppingListAdapter;
 
 public class ShoppingListActivity extends AppCompatActivity {
     //Lo que necesita una lista
     private ArrayList<String> itemList;
-    private ArrayAdapter<String> adapter;
+    private ShoppingListAdapter adapter;
 
 
     private ListView list;
@@ -48,8 +49,12 @@ public class ShoppingListActivity extends AppCompatActivity {
         itemList.add("Copas Danone");
 
         //CREAR ADAPTADOR
-        //this=puntero a la actividad actual, hace referencia a ella
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, itemList);
+        //this = puntero a la actividad actual, hace referencia a ella
+        //adapter = crea los views y adapta el texto segun los datos de la lista
+        adapter = new ShoppingListAdapter(
+                this,
+                R.layout.shopping_item,
+                itemList);
 
         //LISTENER DE CUANDO CLICAN EL BOTÓN
         btn_add.setOnClickListener(new View.OnClickListener() {
