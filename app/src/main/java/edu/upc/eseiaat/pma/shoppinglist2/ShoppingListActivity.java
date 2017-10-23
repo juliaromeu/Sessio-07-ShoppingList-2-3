@@ -20,7 +20,7 @@ import edu.upc.eseiaat.pma.shoppinglist2.ShoppingListAdapter;
 
 public class ShoppingListActivity extends AppCompatActivity {
     //Lo que necesita una lista
-    private ArrayList<String> itemList;
+    private ArrayList<ShoppingItem> itemList;
     private ShoppingListAdapter adapter;
 
 
@@ -43,10 +43,10 @@ public class ShoppingListActivity extends AppCompatActivity {
 
         //CONSTRUIR OBJETO
         itemList = new ArrayList<>();
-        itemList.add("Patatas");
-        itemList.add("Zanahorias");
-        itemList.add("Papel WC");
-        itemList.add("Copas Danone");
+        itemList.add(new ShoppingItem("Patatas"), true);
+        itemList.add(new ShoppingItem ("Zanahorias"), true);
+        itemList.add(new ShoppingItem ("Papel WC"));
+        itemList.add(new ShoppingItem ("Copas Danone"));
 
         //CREAR ADAPTADOR
         //this = puntero a la actividad actual, hace referencia a ella
@@ -108,7 +108,7 @@ public class ShoppingListActivity extends AppCompatActivity {
         String item_text= edit_item.getText().toString();
         //Evitar cuadros en blanco. Añadir solo si hay algo escrito.
         if (!item_text.isEmpty()){
-            itemList.add(item_text);
+            itemList.add(new ShoppingItem(item_text));
             adapter.notifyDataSetChanged();
             //Borrar la caja de texto cuando ya he añadido el item
             edit_item.setText("");
