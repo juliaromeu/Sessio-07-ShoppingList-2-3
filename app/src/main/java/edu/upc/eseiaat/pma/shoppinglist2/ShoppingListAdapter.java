@@ -18,7 +18,7 @@ import java.util.zip.Inflater;
  */
 
 //Classe ArrayAdapter que trabaja con objetos String, sino no funciona y tienes que convertirlos en (String)
-public class ShoppingListAdapter extends ArrayAdapter <String> {
+public class ShoppingListAdapter extends ArrayAdapter <ShoppingItem> {
 
     //CONSTRUCTOR --> Llama al constructor de la clase ArrayAdapter
     public ShoppingListAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List objects) {
@@ -42,10 +42,12 @@ public class ShoppingListAdapter extends ArrayAdapter <String> {
 
         }
 
-        CheckBox shopping_item = (CheckBox) result.findViewById(R.id.shopping_item);
+        CheckBox checkbox = (CheckBox) result.findViewById(R.id.shopping_item);
         //Pedirle al adaptador el elemento de los datos de esta posición
-        String item_text = getItem(position);
-        shopping_item.setText(item_text);
+        ShoppingItem item = getItem(position);
+        checkbox.setText(item.getText());
+        //Saber si el item está marcado o no
+        checkbox.setChecked(item.isChecked());
         return result;
     }
 }

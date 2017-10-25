@@ -43,8 +43,8 @@ public class ShoppingListActivity extends AppCompatActivity {
 
         //CONSTRUIR OBJETO
         itemList = new ArrayList<>();
-        itemList.add(new ShoppingItem("Patatas"), true);
-        itemList.add(new ShoppingItem ("Zanahorias"), true);
+        itemList.add(new ShoppingItem("Patatas"));
+        itemList.add(new ShoppingItem ("Zanahorias"));
         itemList.add(new ShoppingItem ("Papel WC"));
         itemList.add(new ShoppingItem ("Copas Danone"));
 
@@ -75,6 +75,20 @@ public class ShoppingListActivity extends AppCompatActivity {
         //Se necesita ponerlo siempre en una lista, lo añadimos al inicio del proyecto
         list.setAdapter(adapter);
 
+        //ENTERARNOS CUANDO CLICAN UN ELEMENTO
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
+                //Cambiamos los datos
+                itemList.get(pos).toggleChecked();
+                //Notificamos al adaptador que hemos cambiado los datos
+                adapter.notifyDataSetChanged();
+
+
+
+            }
+        });
+
         //ELIMINAR ITEMS
         list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -90,7 +104,7 @@ public class ShoppingListActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.confirm);
         String fmt = getResources().getString(R.string.confirm_message);
-        builder.setMessage(String.format(fmt, itemList.get(pos)));
+        builder.setMessage(String.format(fmt, itemList.get(pos).getText()));
         builder.setPositiveButton(R.string.remove, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -113,5 +127,9 @@ public class ShoppingListActivity extends AppCompatActivity {
             //Borrar la caja de texto cuando ya he añadido el item
             edit_item.setText("");
         }
+        //Cuando añado un item, que la lista se mueva sola y baje esta la nueva posición para ver como lo añado
+        //itemList.size()- 1= posición última de la lista
+        //Le estoy diciendo a la lista que se mueva hasta ahí (última posición)
+        list.smoothScrollToPosition(itemList.size()-1);
     }
 }
